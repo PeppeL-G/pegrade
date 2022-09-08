@@ -1,0 +1,13 @@
+<h1>Movies!</h1>
+
+{{#if movies.length}}
+	<ul>
+		{{#each movies}}
+			<li>{{title}} ({{grade}}/10)</li>
+		{{/each}}
+	</ul>
+	
+{{else}}
+	<p>We have no movies to recommend at the moment.</p>
+{{/if}}
+
