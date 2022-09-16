@@ -1,3 +1,38 @@
 body{
-	background-color: aqua;
+	background-color: silver;
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+body > header{
+	font-size: 2em;
+	text-align: center;
+	font-style: italic;
+	padding: 0.25em;
+}
+
+body > nav{
+	text-align: center;
+}
+
+body > nav > a{
+	display: inline-block;
+	background-color: grey;
+	padding: 0.5em 1em;
+	color: white;
+	border-radius: 1em;
+}
+
+body > nav > a:hover{
+	background-color: lightgray;
+	color: black;
+}
+
+body > footer{
+	max-width: 60%;
+	border-top: 1px dotted black;
+	margin: 0 auto;
+	text-align: center;
+	font-size: 0.8em;
+	padding: 0.25em;
 }
