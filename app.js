@@ -12,6 +12,12 @@ app.use(
 	express.static('public')
 )
 
+app.use(
+	express.urlencoded({
+		extended: false
+	})
+)
+
 app.get('/', function(request, response){
 	response.render('start.hbs')
 })
@@ -23,6 +29,25 @@ app.get('/movies', function(request, response){
 	}
 	
 	response.render('movies.hbs', model)
+	
+})
+
+app.get("/movies/create", function(request, response){
+	response.render("create-movie.hbs")
+})
+
+app.post("/movies/create", function(request, response){
+	
+	const title = request.body.title
+	const grade = request.body.grade
+	
+	data.movies.push({
+		id: data.movies.at(-1).id + 1,
+		title: title,
+		grade: grade
+	})
+	
+	response.redirect("/movies")
 	
 })
 
