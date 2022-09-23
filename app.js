@@ -1,8 +1,11 @@
 const express = require('express')
 const expressHandlebars = require('express-handlebars')
 const sqlite3 = require('sqlite3')
+const expressSession = require('express-session')
 
 const MOVIE_TITLE_MAX_LENGTH = 100
+const ADMIN_USERNAME = "Alice"
+const ADMIN_PASSWORD = "abc123"
 
 const db = new sqlite3.Database("pegrade-database.db")
 
@@ -27,6 +30,14 @@ app.use(
 app.use(
 	express.urlencoded({
 		extended: false
+	})
+)
+
+app.use(
+	expressSession({
+		saveUninitialized: false,
+		resave: false,
+		secret: "fdgfdskdjslakfj"
 	})
 )
 
@@ -85,6 +96,10 @@ app.post("/movies/create", function(request, response){
 		errorMessages.push("Grade may not be negative")
 	}else if(10 < grade){
 		errorMessages.push("Grade may at most be 10")
+	}
+	
+	if(!request.session.isLoggedIn){
+		errorMessages.push("Not logged in")
 	}
 	
 	if(errorMessages.length == 0){
@@ -148,6 +163,33 @@ app.get("/movies/:id", function(request, response){
 		response.render('movie.hbs', model)
 		
 	})
+	
+})
+
+app.get("/login", function(request, response){
+	response.render("login.hbs")
+})
+
+app.post("/login", function(request, response){
+	
+	const username = request.body.username
+	const password = request.body.password
+	
+	if(username == ADMIN_USERNAME && password == ADMIN_PASSWORD){
+		
+		request.session.isLoggedIn = true
+		
+		response.redirect("/")
+		
+	}else{
+		
+		const model = {
+			failedToLogin: true
+		}
+		
+		response.render('login.hbs', model)
+		
+	}
 	
 })
 

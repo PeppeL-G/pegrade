@@ -1,2 +1,8 @@
 <h1>Welcome to Pegrade!</h1>
 <p>On this website you can find good movies to watch.</p>
+
+{{#if session.isLoggedIn}}
+	<p>You are logged in.</p>
+{{else}}
+	<p>Not logged in</p>
+{{/if}}
