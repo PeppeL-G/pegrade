@@ -41,13 +41,15 @@ app.use(
 	})
 )
 
-app.get('/', function(request, response){
-	
-	const model = {
-		session: request.session
+app.use(
+	function(request, response, next){
+		response.locals.session = request.session
+		next()
 	}
-	
-	response.render('start.hbs', model)
+)
+
+app.get('/', function(request, response){
+	response.render('start.hbs')
 })
 
 app.get('/movies', function(request, response){
@@ -64,7 +66,7 @@ app.get('/movies', function(request, response){
 		
 		const model = {
 			errorMessages,
-			movies
+			movies,
 		}
 		
 		response.render('movies.hbs', model)

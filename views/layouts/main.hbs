@@ -15,8 +15,11 @@
 	<nav>
 		<a href="/">Start</a>
 		<a href="/movies">Movies</a>
-		<a href="/movies/create">Create</a>
-		<a href="/login">Login</a>
+		{{#if session.isLoggedIn}}
+			<a href="/movies/create">Create</a>
+		{{else}}
+			<a href="/login">Login</a>
+		{{/if}}
 	</nav>
 	
 	{{{body}}}
